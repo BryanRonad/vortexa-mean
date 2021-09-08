@@ -1,0 +1,81 @@
+<div *ngIf="endpoint === 1; else second">
+  <h4>Select filters for Vessels</h4>
+  <mat-form-field appearance="fill">
+    <mat-label>Filter</mat-label>
+    <mat-select [(ngModel)]="selectedFilter" name="filter" multiple>
+      <mat-option
+        *ngFor="let filter of filterObj[endpoint] | keyvalue"
+        [value]="filter.key"
+      >
+        {{ filter.key }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <p>
+    <ng-container *ngIf="selectedFilter && selectedFilter.length > 0">
+      Selected filter(s): {{ selectedFilter }}<br />
+      <button mat-raised-button (click)="addFilter(selectedFilter)">
+        Show/Hide filter(s)
+      </button>
+    </ng-container>
+  </p>
+  <div id="comp-render" *ngIf="display && selectedFilter.length > 0">
+    <app-dynamic-filter-form
+      (dataSourceEvent)="setDataSource($event)"
+      [filterArr]="createObjArr(selectedFilter)"
+      [endpoint]="endpoint"
+    ></app-dynamic-filter-form>
+  </div>
+</div>
+<ng-template #second>
+  <div *ngIf="endpoint === 2; else third">
+    <h4>Select filters for Vessel Movements</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Filter</mat-label>
+      <mat-select [(ngModel)]="selectedFilter" name="filter" multiple>
+        <mat-option
+          *ngFor="let filter of filterObj[endpoint] | keyvalue"
+          [value]="filter.key"
+        >
+          {{ filter.key }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>
+      <ng-container *ngIf="selectedFilter && selectedFilter.length > 0">
+        Selected filter(s): {{ selectedFilter }}<br />
+        <button mat-raised-button (click)="addFilter(selectedFilter)">
+          Show/Hide filter(s)
+        </button>
+      </ng-container>
+    </p>
+    <div id="comp-render" *ngIf="display && selectedFilter.length > 0">
+      <app-dynamic-filter-form
+        (dataSourceEvent)="setDataSource($event)"
+        [filterArr]="createObjArr(selectedFilter)"
+        [endpoint]="endpoint"
+      ></app-dynamic-filter-form>
+    </div>
+  </div>
+</ng-template>
+<ng-template #third>
+  <div *ngIf="endpoint === 3; else elseBlock">
+    <h4>Select filters for Cargo</h4>
+    <!-- <mat-label>Filter</mat-label>
+    <section class="example-section" [formGroup]="filters">
+      <p>
+        <mat-checkbox
+          *ngFor="let filter of filterObj[endpoint] | keyvalue"
+          formControlName="{{ filter.key }}"
+        >
+          {{ filter.key }}
+        </mat-checkbox>
+      </p>
+    </section>
+    <section class="example-section" [formGroup]="filters">
+      <h4>You chose:</h4>
+      {{ filters.value | json }}
+    </section> -->
+  </div>
+</ng-template>
+<ng-template #elseBlock> {{ endpoint }} </ng-template>

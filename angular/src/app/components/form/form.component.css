@@ -1,0 +1,15 @@
+.col {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  align-items: center;
+}
+
+.main {
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  padding-top: 30px;
+  align-items: center;
+}

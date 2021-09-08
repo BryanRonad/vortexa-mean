@@ -1,0 +1,14 @@
+<div class="main">
+  <div class="endpoint col">
+    <h4>Select type of operation</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Select an option</mat-label>
+      <mat-select [(value)]="selected">
+        <mat-option value="Vessels">Vessels</mat-option>
+        <mat-option value="VesselMovements">VesselMovements</mat-option>
+        <mat-option value="Cargo">Cargo</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>You selected: {{ selected }}</p>
+  </div>
+</div>

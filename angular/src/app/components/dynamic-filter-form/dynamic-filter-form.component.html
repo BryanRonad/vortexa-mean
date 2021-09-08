@@ -1,0 +1,52 @@
+<form [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
+  <!-- {{ filterArr | json }} -->
+  <div *ngFor="let form_elem of filterArr">
+    <div [ngSwitch]="form_elem.type">
+      <div *ngSwitchCase="'textbox'">
+        <mat-form-field appearance="fill">
+          <mat-label>{{ form_elem.label }}</mat-label>
+          <input matInput formControlName="{{ form_elem.label }}" />
+        </mat-form-field>
+      </div>
+      <div *ngSwitchCase="'number'">
+        <input type="number" formControlName="{{ form_elem.label }}" />
+      </div>
+      <div *ngSwitchCase="'checkbox'">
+        <mat-form-field appearance="fill">
+          <mat-label>{{ form_elem.label }}</mat-label>
+          <mat-select formControlName="{{ form_elem.label }}" multiple>
+            <mat-option *ngFor="let opt of form_elem.options" [value]="opt">
+              {{ opt }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngSwitchCase="'radio'">
+        <mat-form-field appearance="fill">
+          <mat-label>{{ form_elem.label }}</mat-label>
+          <mat-select formControlName="{{ form_elem.label }}">
+            <mat-option *ngFor="let opt of form_elem.options" [value]="opt">
+              {{ opt }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngSwitchCase="'date'">
+        <mat-form-field appearance="fill">
+          <mat-label>{{ form_elem.label }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="{{ form_elem.label }}"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <button mat-raised-button type="submit" value="save">Submit</button>
+</form>
