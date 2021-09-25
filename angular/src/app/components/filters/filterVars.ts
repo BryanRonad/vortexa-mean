@@ -1,6 +1,6 @@
 const vessels = {
   Term: { type: 'textbox' },
-  IDs: { type: 'textbox' },
+  IDs: { type: 'textArray' },
   vessel_classes: {
     type: 'checkbox',
     options: [
@@ -18,7 +18,7 @@ const vessels = {
       'vlgc',
     ],
   },
-  vessel_product_types: { type: 'textbox' },
+  vessel_product_types: { type: 'textArray' },
   // vessel_scrubbers: { type: 'radio' },
   exact_term_match: { type: 'radio', options: [true, false] },
 };
@@ -45,12 +45,12 @@ const vesselMovements = {
   filter_time_min: { type: 'date' },
   filter_time_max: { type: 'date' },
   unit: { type: 'radio', options: ['b', 't'] },
-  filter_charterers: { type: 'textbox' },
-  filter_destinations: { type: 'textbox' },
-  filter_origins: { type: 'textbox' },
-  filter_owners: { type: 'textbox' },
-  filter_products: { type: 'textbox' },
-  filter_vessels: { type: 'textbox' },
+  filter_charterers: { type: 'textArray' },
+  filter_destinations: { type: 'textArray' },
+  filter_origins: { type: 'textArray' },
+  filter_owners: { type: 'textArray' },
+  filter_products: { type: 'textArray' },
+  filter_vessels: { type: 'textArray' },
   filter_vessel_classes: {
     type: 'checkbox',
     options: [

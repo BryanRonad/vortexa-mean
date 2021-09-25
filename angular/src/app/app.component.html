@@ -3,7 +3,7 @@
   <mat-tab-group mat-align-tabs="center">
     <ng-container *ngFor="let tab of tabs">
       <mat-tab [label]="tab.text">
-        <mat-grid-list cols="4" rows="1">
+        <mat-grid-list cols="4" rows="1" rowHeight="88vh">
           <ng-container *ngFor="let tile of tiles">
             <mat-grid-tile
               [colspan]="tile.cols"
@@ -20,13 +20,15 @@
                 ></app-filters>
               </ng-template>
               <ng-template #falseBlock>
-                <app-table
-                  *ngIf="tableDataSourceArr.length > 0; else falseBlock2"
-                  [endpoint]="tab.id"
-                  [tableData]="tableDataSourceArr"
-                  [displayedColumns]="displayedColumns"
-                ></app-table>
-                <ng-template #falseBlock2> No data! </ng-template>
+                <div class="table-container">
+                  <app-table
+                    *ngIf="tableDataSourceArr.length > 0; else falseBlock2"
+                    [endpoint]="tab.id"
+                    [tableData]="tableDataSourceArr"
+                    [displayedColumns]="displayedColumns"
+                  ></app-table>
+                  <ng-template #falseBlock2><span>No data!</span></ng-template>
+                </div>
               </ng-template>
             </mat-grid-tile>
           </ng-container>

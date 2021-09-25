@@ -48,4 +48,11 @@ export class DynamicFilterFormComponent implements OnInit {
     });
     this.myFormGroup = new FormGroup(group);
   }
+
+  inputSplit(e, label) {
+    this.myFormGroup.value[label] = e.target.value
+      .split(',')
+      .map((item) => item.trim());
+    console.log(this.myFormGroup.value[label]);
+  }
 }

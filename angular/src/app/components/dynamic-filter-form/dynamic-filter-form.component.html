@@ -8,6 +8,16 @@
           <input matInput formControlName="{{ form_elem.label }}" />
         </mat-form-field>
       </div>
+      <div *ngSwitchCase="'textArray'">
+        <mat-form-field appearance="fill">
+          <mat-label>{{ form_elem.label }}</mat-label>
+          <input
+            matInput
+            (input)="inputSplit($event, form_elem.label)"
+            formControlName="{{ form_elem.label }}"
+          />
+        </mat-form-field>
+      </div>
       <div *ngSwitchCase="'number'">
         <input type="number" formControlName="{{ form_elem.label }}" />
       </div>

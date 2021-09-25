@@ -4,7 +4,7 @@ const { spawn } = require("child_process");
 
 const endpointMap = {
   1: "vessels",
-  2: "vesselMovements",
+  2: "vesselmovements",
   3: "cargo",
 };
 
@@ -19,14 +19,14 @@ router.post("/:type", (req, res, next) => {
   pyProgram.stdout.on("data", (data) => {
     // console.log("Result", data.toString());
     // res.send(data.toString());
-    return res.send(data.toString());
+    res.write(data.toString());
   });
   pyProgram.stderr.on("data", (data) => {
     console.log(`Error occurred: ${data}`);
-    return res.send(false);
   });
   pyProgram.on("close", (code) => {
     console.log(`Python process exit with code ${code}`);
+    res.end();
   });
 });
 

@@ -21,7 +21,7 @@ export interface Tab {
 export class AppComponent {
   tiles: Tile[] = [
     { text: 'Filters', cols: 1, rows: 1, color: 'lightblue', type: 'filters' },
-    { text: 'Table', cols: 3, rows: 1, color: 'lightgreen', type: 'table' },
+    { text: 'Table', cols: 3, rows: 1, color: 'white', type: 'table' },
   ];
 
   tabs: Tab[] = [

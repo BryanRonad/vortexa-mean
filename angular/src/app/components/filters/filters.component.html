@@ -13,7 +13,6 @@
   </mat-form-field>
   <p>
     <ng-container *ngIf="selectedFilter && selectedFilter.length > 0">
-      Selected filter(s): {{ selectedFilter }}<br />
       <button mat-raised-button (click)="addFilter(selectedFilter)">
         Show/Hide filter(s)
       </button>
@@ -43,7 +42,6 @@
     </mat-form-field>
     <p>
       <ng-container *ngIf="selectedFilter && selectedFilter.length > 0">
-        Selected filter(s): {{ selectedFilter }}<br />
         <button mat-raised-button (click)="addFilter(selectedFilter)">
           Show/Hide filter(s)
         </button>
