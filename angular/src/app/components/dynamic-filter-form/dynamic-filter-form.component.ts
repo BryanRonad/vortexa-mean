@@ -46,6 +46,7 @@ export class DynamicFilterFormComponent implements OnInit {
     this.filterArr.forEach((filter) => {
       group[filter.label] = new FormControl('');
     });
+    group['mongo'] = new FormControl(false);
     this.myFormGroup = new FormGroup(group);
   }
 

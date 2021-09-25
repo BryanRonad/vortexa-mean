@@ -1,3 +1,4 @@
 module.exports = {
-  database: "mongodb://localhost:27017/vortexa",
+  client: "mongodb://localhost:27017",
+  database: "vortexa",
 };

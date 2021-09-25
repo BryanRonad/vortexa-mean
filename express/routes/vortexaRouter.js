@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { spawn } = require("child_process");
+const MongoClient = require("mongodb").MongoClient;
+const config = require("../config/database");
 
 const endpointMap = {
   1: "vessels",
@@ -11,15 +13,41 @@ const endpointMap = {
 // Vessels
 router.post("/:type", (req, res, next) => {
   const type = req.params.type;
+  const filterObj = req.body;
+  const mongo = filterObj.mongo;
+  delete filterObj.mongo;
   const pyProgram = spawn("/home/bryan/anaconda3/envs/vortexa/bin/python", [
     __dirname + "/vortexa_sdk.py",
     endpointMap[type],
-    JSON.stringify(req.body),
+    JSON.stringify(filterObj),
   ]);
   pyProgram.stdout.on("data", (data) => {
-    // console.log("Result", data.toString());
-    // res.send(data.toString());
-    res.write(data.toString());
+    if (mongo) {
+      MongoClient.connect(config.client, (err, client) => {
+        if (err) {
+          throw err;
+        } else {
+          let resultArr = JSON.parse(data.toString());
+          console.log(typeof resultArr);
+          let db = client.db(config.database);
+          console.log("Connected to database", config.database);
+          db.collection(endpointMap[type]).insertOne(
+            {
+              datetime: new Date(Date.now()),
+              filters: filterObj,
+              result: resultArr,
+            },
+            (err, res) => {
+              if (err) throw err;
+              console.log(res.insertedCount + " documents inserted");
+            }
+          );
+        }
+      });
+    } else {
+      console.log("Insertion to MongoDB disabled");
+    }
+    return res.write(data.toString());
   });
   pyProgram.stderr.on("data", (data) => {
     console.log(`Error occurred: ${data}`);
