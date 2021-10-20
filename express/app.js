@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-const connection = require("./mongo-connection");
 const app = express();
 
 const homeRouter = require("./routes/homeRouter");

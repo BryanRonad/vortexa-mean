@@ -3,7 +3,7 @@ const router = express.Router();
 const { spawn } = require("child_process");
 const MongoClient = require("mongodb").MongoClient;
 const config = require("../config/database");
-
+var resArr;
 const endpointMap = {
   1: "vessels",
   2: "vesselmovements",
@@ -22,15 +22,25 @@ router.post("/:type", (req, res, next) => {
     JSON.stringify(filterObj),
   ]);
   pyProgram.stdout.on("data", (data) => {
+    resArr = data.toString();
+    console.log(resArr);
+    return res.write(data.toString());
+  });
+  pyProgram.stderr.on("data", (data) => {
+    console.log(`Error occurred: ${data}`);
+  });
+  pyProgram.on("close", (code) => {
+    console.log(`Python process exit with code ${code}`);
     if (mongo) {
       MongoClient.connect(config.client, (err, client) => {
         if (err) {
           throw err;
         } else {
-          let resultArr = JSON.parse(data.toString());
-          console.log(typeof resultArr);
+          console.log("Checking existence", resArr);
+          let resultArr = JSON.parse(resArr);
           let db = client.db(config.database);
           console.log("Connected to database", config.database);
+          console.log("Insertion", resultArr);
           db.collection(endpointMap[type]).insertOne(
             {
               datetime: new Date(Date.now()),
@@ -47,13 +57,6 @@ router.post("/:type", (req, res, next) => {
     } else {
       console.log("Insertion to MongoDB disabled");
     }
-    return res.write(data.toString());
-  });
-  pyProgram.stderr.on("data", (data) => {
-    console.log(`Error occurred: ${data}`);
-  });
-  pyProgram.on("close", (code) => {
-    console.log(`Python process exit with code ${code}`);
     res.end();
   });
 });

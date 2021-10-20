@@ -18,6 +18,14 @@ export class DynamicFilterFormComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   onSubmit() {
+    Object.keys(this.myFormGroup.value).forEach((ele) => {
+      if (this.myFormGroup.value[ele] instanceof Date) {
+        this.myFormGroup.value[ele] = `datetime${
+          this.myFormGroup.value[ele].getTime() / 1000
+        }`;
+        console.log(this.myFormGroup.value[ele]);
+      }
+    });
     console.log(this.myFormGroup.value);
     this.http
       .post(

@@ -23,6 +23,12 @@ def callVesselsAPI(filterDict):
 if __name__ == "__main__":
     filterDict = (json.loads(sys.argv[2]))
     filterDict = {k.lower(): v for k, v in filterDict.items()}
+    # filterDict = {v.replace('datetime', ''): v for k,
+    #               v in filterDict.items() if v.startswith('datetime')}
+    for k, v in filterDict.items():
+        if type(filterDict[k]) == str and filterDict[k].startswith('datetime'):
+            filterDict[k] = filterDict[k].replace('datetime', '')
+            filterDict[k] = datetime.fromtimestamp(int(filterDict[k]))
     if(sys.argv[1] == 'vesselmovements'):
         res_json = (callVesselMovementsAPI(
             filterDict
@@ -33,5 +39,5 @@ if __name__ == "__main__":
         ))
     else:
         raise ValueError("This is an invalid endpoint")
-    print(res_json)
+    print(str(res_json))
     sys.stdout.flush()
